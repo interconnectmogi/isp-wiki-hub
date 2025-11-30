@@ -1,12 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Department } from '@/types/wiki';
+import { MarkdownEditor } from '@/components/MarkdownEditor';
 
 const departments = [
   { value: 'atendimento', label: 'Atendimento' },
@@ -85,19 +85,14 @@ export default function RequestContent() {
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="content">Conteúdo Sugerido</Label>
-              <Textarea
-                id="content"
-                placeholder="Descreva o conteúdo que você gostaria de adicionar à wiki..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows={10}
-              />
-              <p className="text-xs text-muted-foreground">
-                Forneça o máximo de detalhes possível. Você pode incluir links, referências e exemplos.
-              </p>
-            </div>
+            <MarkdownEditor
+              value={content}
+              onChange={setContent}
+              label="Conteúdo Sugerido"
+              placeholder="Descreva o conteúdo que você gostaria de adicionar à wiki em Markdown. Você pode adicionar imagens!"
+              rows={12}
+              showPreview={true}
+            />
 
             <Button type="submit" className="w-full">
               Enviar Solicitação
