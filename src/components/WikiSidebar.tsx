@@ -1,5 +1,6 @@
 import { FileText, Users, DollarSign, Package, Settings, Plus, Bell } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
+import logoImage from '@/assets/conexao-web-logo.png';
 import {
   Sidebar,
   SidebarContent,
@@ -36,8 +37,13 @@ export function WikiSidebar({ userDepartments, isAdmin, pendingRequestsCount = 0
   return (
     <Sidebar>
       <SidebarHeader className="border-b border-border p-4">
-        <h2 className="text-lg font-bold text-primary">Wiki ISP</h2>
-        <p className="text-xs text-muted-foreground">Base de Conhecimento</p>
+        <div className="flex items-center gap-3">
+          <img src={logoImage} alt="Conexão Web" className="h-10 w-10 object-contain" />
+          <div>
+            <h2 className="text-lg font-bold text-primary">Wiki Conexão Web</h2>
+            <p className="text-xs text-muted-foreground">Base de Conhecimento</p>
+          </div>
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
