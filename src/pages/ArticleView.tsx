@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, User, Calendar, Edit } from 'lucide-react';
 import { Department } from '@/types/wiki';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function ArticleView() {
   const { department, articleId } = useParams<{ department: Department; articleId: string }>();
@@ -63,8 +65,10 @@ export default function ArticleView() {
             {section.title}
           </Badge>
         </CardHeader>
-        <CardContent className="prose prose-sm max-w-none">
-          <div className="whitespace-pre-wrap text-foreground leading-relaxed">{article.content}</div>
+        <CardContent className="prose prose-neutral dark:prose-invert max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {article.content}
+          </ReactMarkdown>
         </CardContent>
       </Card>
     </div>
