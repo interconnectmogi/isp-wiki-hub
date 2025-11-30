@@ -3,6 +3,7 @@ import { WikiSidebar } from '@/components/WikiSidebar';
 import { mockUser, mockContentRequests } from '@/lib/mockData';
 import { Outlet } from 'react-router-dom';
 import logoImage from '@/assets/conexao-web-logo.png';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const Index = () => {
   const pendingRequestsCount = mockContentRequests.filter((r) => r.status === 'pending').length;
@@ -20,9 +21,12 @@ const Index = () => {
             <SidebarTrigger />
             <img src={logoImage} alt="Conexão Web" className="h-8 w-8 object-contain" />
             <div className="flex-1" />
-            <div className="flex items-center gap-2 text-sm">
-              <span className="text-muted-foreground">Bem-vindo,</span>
-              <span className="font-medium text-foreground">{mockUser.name}</span>
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-muted-foreground">Bem-vindo,</span>
+                <span className="font-medium text-foreground">{mockUser.name}</span>
+              </div>
             </div>
           </header>
           <div className="p-6">
