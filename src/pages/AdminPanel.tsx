@@ -2,8 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { mockContentRequests } from '@/lib/mockData';
-import { Check, X, Clock } from 'lucide-react';
+import { Check, X, Clock, Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 export default function AdminPanel() {
   const { toast } = useToast();
@@ -27,9 +28,17 @@ export default function AdminPanel() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-4xl font-bold text-foreground mb-2">Painel Administrativo</h1>
-        <p className="text-muted-foreground">Gerencie solicitações de conteúdo e permissões</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Painel Administrativo</h1>
+          <p className="text-muted-foreground">Gerencie solicitações de conteúdo e permissões</p>
+        </div>
+        <Link to="/editor">
+          <Button>
+            <Plus className="h-4 w-4 mr-2" />
+            Novo Artigo
+          </Button>
+        </Link>
       </div>
 
       <div className="grid gap-4">
