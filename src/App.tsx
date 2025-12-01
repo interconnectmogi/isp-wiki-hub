@@ -4,8 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
 import WikiHome from "./pages/WikiHome";
 import DepartmentView from "./pages/DepartmentView";
 import ArticleView from "./pages/ArticleView";
@@ -18,24 +21,34 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />}>
-              <Route index element={<WikiHome />} />
-              <Route path="department/:department" element={<DepartmentView />} />
-            <Route path="department/:department/:articleId" element={<ArticleView />} />
-            <Route path="requests" element={<RequestContent />} />
-            <Route path="admin" element={<AdminPanel />} />
-            <Route path="editor" element={<ArticleEditor />} />
-            </Route>
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Index />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<WikiHome />} />
+                <Route path="department/:department" element={<DepartmentView />} />
+                <Route path="department/:department/:articleId" element={<ArticleView />} />
+                <Route path="requests" element={<RequestContent />} />
+                <Route path="admin" element={<AdminPanel />} />
+                <Route path="editor" element={<ArticleEditor />} />
+              </Route>
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

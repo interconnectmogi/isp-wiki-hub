@@ -1,12 +1,22 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { WikiSidebar } from '@/components/WikiSidebar';
 import { mockUser, mockContentRequests } from '@/lib/mockData';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import logoImage from '@/assets/conexao-web-logo.png';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 
 const Index = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const pendingRequestsCount = mockContentRequests.filter((r) => r.status === 'pending').length;
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <SidebarProvider>
@@ -25,8 +35,11 @@ const Index = () => {
               <ThemeToggle />
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Bem-vindo,</span>
-                <span className="font-medium text-foreground">{mockUser.name}</span>
+                <span className="font-medium text-foreground">{user?.name || mockUser.name}</span>
               </div>
+              <Button variant="ghost" size="icon" onClick={handleLogout} title="Sair">
+                <LogOut className="h-4 w-4" />
+              </Button>
             </div>
           </header>
           <div className="p-6">
