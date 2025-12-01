@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { useToast } from '@/hooks/use-toast';
 
 interface MarkdownEditorProps {
@@ -102,7 +103,12 @@ export function MarkdownEditor({
       {isPreviewMode ? (
         <Card className="p-4 min-h-[240px]">
           <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{value || '*Nenhum conteúdo para visualizar*'}</ReactMarkdown>
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {value || '*Nenhum conteúdo para visualizar*'}
+            </ReactMarkdown>
           </div>
         </Card>
       ) : (
