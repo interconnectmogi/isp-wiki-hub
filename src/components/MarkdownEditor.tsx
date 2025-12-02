@@ -150,9 +150,31 @@ export function MarkdownEditor({
             rows={rows}
             className="font-mono text-sm"
           />
+          {imageMap.size > 0 && (
+            <div className="flex flex-wrap gap-2 p-2 border rounded-md bg-muted/30">
+              <span className="text-xs text-muted-foreground w-full mb-1">
+                Imagens incorporadas ({imageMap.size}):
+              </span>
+              {Array.from(imageMap.entries()).map(([placeholder, base64Url], index) => (
+                <div 
+                  key={placeholder} 
+                  className="relative group"
+                  title={`Imagem ${index + 1}`}
+                >
+                  <img 
+                    src={base64Url} 
+                    alt={`Imagem ${index + 1}`}
+                    className="h-16 w-16 object-cover rounded border"
+                  />
+                  <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[10px] text-center py-0.5 rounded-b">
+                    {index + 1}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
           <p className="text-xs text-muted-foreground">
             Suporta Markdown: **negrito**, *itálico*, [links](url), `código`, # títulos, listas, etc.
-            {imageMap.size > 0 && ` • ${imageMap.size} imagem(ns) incorporada(s)`}
           </p>
         </>
       )}
