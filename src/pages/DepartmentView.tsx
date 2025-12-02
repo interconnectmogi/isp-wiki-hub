@@ -30,15 +30,15 @@ export default function DepartmentView() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-bold text-foreground">{section.title}</h1>
-          <Badge variant="outline" className="text-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+          <h1 className="text-2xl sm:text-4xl font-bold text-foreground">{section.title}</h1>
+          <Badge variant="outline" className="text-xs sm:text-sm w-fit">
             {departmentNames[department as Department]}
           </Badge>
         </div>
-        <p className="text-muted-foreground">{section.subsections.length} artigos nesta seção</p>
+        <p className="text-sm sm:text-base text-muted-foreground">{section.subsections.length} artigos nesta seção</p>
       </div>
 
       <div className="grid gap-4">

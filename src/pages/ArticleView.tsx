@@ -42,21 +42,21 @@ export default function ArticleView() {
 
       <Card>
         <CardHeader className="space-y-4">
-          <div className="flex items-start justify-between">
-            <div className="space-y-2 flex-1">
-              <CardTitle className="text-3xl">{article.title}</CardTitle>
-              <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+            <div className="space-y-2 flex-1 min-w-0">
+              <CardTitle className="text-xl sm:text-3xl">{article.title}</CardTitle>
+              <div className="flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
-                  <User className="h-4 w-4" />
+                  <User className="h-3 w-3 sm:h-4 sm:w-4" />
                   {article.author}
                 </div>
                 <div className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
+                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                   Atualizado em {article.updatedAt.toLocaleDateString('pt-BR')}
                 </div>
               </div>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto">
               <Edit className="h-4 w-4 mr-2" />
               Editar
             </Button>

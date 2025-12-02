@@ -27,14 +27,14 @@ export default function AdminPanel() {
   const pendingRequests = mockContentRequests.filter((r) => r.status === 'pending');
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-start justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-foreground mb-2">Painel Administrativo</h1>
-          <p className="text-muted-foreground">Gerencie solicitações de conteúdo e permissões</p>
+          <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-2">Painel Administrativo</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Gerencie solicitações de conteúdo e permissões</p>
         </div>
         <Link to="/editor">
-          <Button>
+          <Button className="w-full sm:w-auto">
             <Plus className="h-4 w-4 mr-2" />
             Novo Artigo
           </Button>
