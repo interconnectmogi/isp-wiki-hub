@@ -116,17 +116,18 @@ export function MarkdownEditor({
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <Label>{label}</Label>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={() => document.getElementById('image-upload')?.click()}
+            className="flex-1 sm:flex-none"
           >
             <Image className="h-4 w-4 mr-2" />
-            Adicionar Imagem
+            <span className="sm:inline">Imagem</span>
           </Button>
           {showPreview && (
             <Button
@@ -134,6 +135,7 @@ export function MarkdownEditor({
               variant="outline"
               size="sm"
               onClick={() => setIsPreviewMode(!isPreviewMode)}
+              className="flex-1 sm:flex-none"
             >
               <Eye className="h-4 w-4 mr-2" />
               {isPreviewMode ? 'Editar' : 'Preview'}

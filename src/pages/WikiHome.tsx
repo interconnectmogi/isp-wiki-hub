@@ -26,10 +26,10 @@ export default function WikiHome() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-foreground mb-2">Base de Conhecimento</h1>
-        <p className="text-muted-foreground">Documentação e procedimentos da empresa</p>
+        <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-2">Base de Conhecimento</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Documentação e procedimentos da empresa</p>
       </div>
 
       <div className="relative">
