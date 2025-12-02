@@ -2,7 +2,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Image, Eye } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -18,6 +18,9 @@ interface MarkdownEditorProps {
   showPreview?: boolean;
 }
 
+// Regex to match base64 images in markdown
+const BASE64_IMAGE_REGEX = /!\[([^\]]*)\]\((data:image\/[^;]+;base64,[^)]+)\)/g;
+
 export function MarkdownEditor({
   value,
   onChange,
@@ -28,6 +31,33 @@ export function MarkdownEditor({
 }: MarkdownEditorProps) {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const { toast } = useToast();
+
+  // Extract base64 images and create a map
+  const { displayValue, imageMap } = useMemo(() => {
+    const images: Map<string, string> = new Map();
+    let index = 0;
+    
+    const display = value.replace(BASE64_IMAGE_REGEX, (match, alt, base64Url) => {
+      const placeholder = `__IMAGE_${index}__`;
+      images.set(placeholder, base64Url);
+      index++;
+      return `![${alt || 'imagem'}](${placeholder})`;
+    });
+    
+    return { displayValue: display, imageMap: images };
+  }, [value]);
+
+  // Convert display value back to actual value with base64
+  const handleDisplayChange = (displayText: string) => {
+    let actualValue = displayText;
+    
+    imageMap.forEach((base64Url, placeholder) => {
+      const placeholderRegex = new RegExp(`\\]\\(${placeholder}\\)`, 'g');
+      actualValue = actualValue.replace(placeholderRegex, `](${base64Url})`);
+    });
+    
+    onChange(actualValue);
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -115,13 +145,14 @@ export function MarkdownEditor({
         <>
           <Textarea
             placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
+            value={displayValue}
+            onChange={(e) => handleDisplayChange(e.target.value)}
             rows={rows}
             className="font-mono text-sm"
           />
           <p className="text-xs text-muted-foreground">
             Suporta Markdown: **negrito**, *itálico*, [links](url), `código`, # títulos, listas, etc.
+            {imageMap.size > 0 && ` • ${imageMap.size} imagem(ns) incorporada(s)`}
           </p>
         </>
       )}
